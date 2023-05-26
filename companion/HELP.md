@@ -1,14 +1,17 @@
 ## Pharos Designer Controller
 
-## This module only works in Designer Projects where API v6 or newer is selected!
+This module only works in Designer Projects where API v6 or newer is selected!
 
-### Requirements:
+### Supported controllers
 
-- The controller needs to have an user and password.
-- At least API v6.0
+The module works with all Pharos Designer controllers.
 
-### Supported Controllers
+Known supported models:
+- LPC-1
+- LPC-2
 
-- LPC Series
-- TPC (not tested but should work)
-- VLC Series (not tested but should work)
+### Available commands
+
+* Timeline (start/release/toggle/pause/resume/set rate/set position)
+* Group (master intensity)
+* Scene (start/release/toggle)
