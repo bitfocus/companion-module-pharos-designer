@@ -3,7 +3,7 @@
 	"name": "pharos-designer",
 	"shortname": "designer",
 	"description": "Module implements the HTTP API for Pharos Designer Controllers",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-pharos-designer.git",
 	"bugs": "https://github.com/bitfocus/companion-module-pharos-designer/issues",

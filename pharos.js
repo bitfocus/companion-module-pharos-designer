@@ -166,7 +166,6 @@ export class PharosClient {
 				headers: headers,
 				body: JSON.stringify(body),
 			})
-			console.log(body)
 			// this response returns a 204 (no-content)
 			// the docs state that a new token should be returned
 			// this is not critical since the 4.5min timer takes

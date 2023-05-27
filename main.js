@@ -1,9 +1,7 @@
-import { InstanceBase, runEntrypoint, InstanceStatus } from '@companion-module/base'
+import { InstanceBase, runEntrypoint, InstanceStatus, Regex } from '@companion-module/base'
 import { getActions } from './actions.js'
 import { getVariables } from './variables.js'
-import { getFeedbacks } from './feedbacks.js'
 import { UpgradeScripts } from './upgrades.js'
-import { Regex } from '@companion-module/base'
 
 import { PharosClient } from './pharos.js'
 
@@ -39,7 +37,6 @@ class PharosInstance extends InstanceBase {
 		}
 
 		this.updateActions() // export actions
-		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
 		this.initController()
 	}
@@ -123,7 +120,6 @@ class PharosInstance extends InstanceBase {
 
 	async poll() {
 		this.log('debug', 'Polling new token')
-		let checkHours = false
 
 		// re-connect?
 		if (!this.pharosConnected) {
@@ -140,7 +136,6 @@ class PharosInstance extends InstanceBase {
 		// first time or every 4.5mins
 		if (this.lastHours === undefined || Date.now() - this.lastHours > 300000) {
 			this.log('debug', 'First time poll')
-			checkHours = true
 			this.lastHours = Date.now()
 		}
 
@@ -195,11 +190,6 @@ class PharosInstance extends InstanceBase {
 	updateActions() {
 		const actions = getActions.bind(this)()
 		this.setActionDefinitions(actions)
-	}
-
-	updateFeedbacks() {
-		const feedbacks = getFeedbacks.bind(this)()
-		this.setFeedbackDefinitions(feedbacks)
 	}
 
 	updateVariableDefinitions() {

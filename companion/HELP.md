@@ -7,11 +7,12 @@ This module only works in Designer Projects where API v6 or newer is selected!
 The module works with all Pharos Designer controllers.
 
 Known supported models:
+
 - LPC-1
 - LPC-2
 
 ### Available commands
 
-* Timeline (start/release/toggle/pause/resume/set rate/set position)
-* Group (master intensity)
-* Scene (start/release/toggle)
+- Timeline (start/release/toggle/pause/resume/set rate/set position)
+- Group (master intensity)
+- Scene (start/release/toggle)
