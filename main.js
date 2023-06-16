@@ -35,7 +35,6 @@ class PharosInstance extends InstanceBase {
 		}
 		this.pharosConnected = false
 		this.updateActions() // export actions
-		this.updateFeedbacks() // export feedbacks
 		this.updateVariableDefinitions() // export variable definitions
 		this.initController()
 	}
@@ -92,6 +91,7 @@ class PharosInstance extends InstanceBase {
 					this.actionData.timelines = this.timelinesResponse.timelines?.map(function (timeline) {
 						return { id: timeline.num, label: timeline.name }
 					})
+					// update actions and feedbacks after data has been recieved
 					this.updateActions() // update actions to have the actionData
 					this.updateFeedbacks() // update feedbacks to have actionData
 				} else {

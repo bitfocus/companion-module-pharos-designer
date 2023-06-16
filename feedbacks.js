@@ -37,115 +37,114 @@ export function getFeedbacks(self) {
 				},
 			],
 			callback: async (feedback) => {
-                // only run this if a controller is connected to prevent errors from getTimelines
-				if (self.pharosConnected) {
-                    // get states of all timelines
+				// only run this if a timeline is selected to prevent errors
+				if (feedback.options.timeline) {
+					// get states of all timelines
 					const res = await self.controller.getTimelines()
-                    // filter out the selected timeline
+					// filter out the selected timeline
 					const timeline = res.timelines.filter((timeline) => timeline.num == feedback.options.timeline)
-                    // return true if state matches selected state
+					// return true if state matches selected state
 					return feedback.options.state == timeline[0].state
 				}
 			},
 		},
-        sceneState: {
-            type: 'boolean',
+		sceneState: {
+			type: 'boolean',
 			name: 'Change background color by state of scene',
 			description: 'If the selected scene has the selected state, change the background color of the button.',
 			defaultStyle: {
 				bgcolor: ColorGreen,
 			},
-            options: [
-                {
-                    type: 'dropdown',
-                    label: 'Scene',
-                    id: 'scene',
-                    choices: self.actionData.scenes,
-                    required: true,
-                },
-                {
-                    type: 'dropdown',
-                    label: 'State',
-                    id: 'state',
-                    choices: [
-                        { id: 'started', label: 'Started' },
-                        { id: 'released', label: 'Released' },
-                    ],
-                    default: 'started',
-                    required: true,
-                }
-            ],
-            callback: async (feedback) => {
-                // only run this if a controller is connected to prevent errors from getScenes
-				if (self.pharosConnected && feedback.options.state && feedback.options.scene) {
-                    self.log('debug', 'triggering feedback')
-                    // get states of all timelines
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Scene',
+					id: 'scene',
+					choices: self.actionData.scenes,
+					required: true,
+				},
+				{
+					type: 'dropdown',
+					label: 'State',
+					id: 'state',
+					choices: [
+						{ id: 'started', label: 'Started' },
+						{ id: 'released', label: 'Released' },
+					],
+					default: 'started',
+					required: true,
+				},
+			],
+			callback: async (feedback) => {
+				// only run this if a timeline is selected to prevent errors
+				if (feedback.options.state && feedback.options.scene) {
+					self.log('debug', 'triggering feedback')
+					// get states of all scenes
 					const res = await self.controller.getScenes()
-                    // filter out the selected timeline
+					// filter out the selected scene
 					const scene = res.scenes.filter((scene) => scene.num == feedback.options.scene)
-                    // return true if state matches selected state
+					// return true if state matches selected state
 					return feedback.options.state === scene[0].state
 				}
-            }
-        },
-        groupState: {
-            type: 'boolean',
+			},
+		},
+		groupState: {
+			type: 'boolean',
 			name: 'Change background color by level of group',
 			description: 'If the selected group has the selected brightness, change the background color of the button.',
 			defaultStyle: {
 				bgcolor: ColorGreen,
 			},
-            options: [
-                {
-                    type: 'dropdown',
-                    label: 'Group',
-                    id: 'group',
-                    choices: self.actionData.groups,
-                    required: true,
-                },
-                {
-                    type: 'dropdown',
-                    label: 'Operator',
-                    id: 'operator',
-                    choices: [
-                        { id: 'more', label: '>' },
-                        { id: 'less', label: '<' },
-                        { id: 'equal', label: '=' },
-                    ],
-                    default: 'equal',
-                    required: true,
-                },
-                {
-                    type: 'number',
-                    label: 'Level',
-                    id: 'level',
-                    max: 100,
-                    min: 0,
-                    required: true,
-                }
-            ],
-            callback: async (feedback) => {
-                // only run this if a controller is connected to prevent errors from getScenes
-				if (self.pharosConnected && feedback.options.level && feedback.options.operator && feedback.options.group) {
-                    self.log('debug', 'triggering feedback')
-                    // get states of all timelines
+			options: [
+				{
+					type: 'dropdown',
+					label: 'Group',
+					id: 'group',
+					choices: self.actionData.groups,
+					required: true,
+				},
+				{
+					type: 'dropdown',
+					label: 'Operator',
+					id: 'operator',
+					choices: [
+						{ id: 'more', label: '>' },
+						{ id: 'less', label: '<' },
+						{ id: 'equal', label: '=' },
+					],
+					default: 'equal',
+					required: true,
+				},
+				{
+					type: 'number',
+					label: 'Level',
+					id: 'level',
+					max: 100,
+					min: 0,
+					required: true,
+				},
+			],
+			callback: async (feedback) => {
+				// only run this if everything is selected to prevent errors
+				if (feedback.options.level && feedback.options.operator && feedback.options.group) {
+					self.log('debug', 'triggering feedback')
+					// get states of all groups
 					const res = await self.controller.getGroups()
-                    // filter out the selected timeline
+					// filter out the selected group
 					const group = res.groups.filter((group) => group.num == feedback.options.group)
-                    // return true if state matches selected state
-                    console.log(group[0].level > feedback.options.level, group[0].level, feedback.options.level )
-                    switch (feedback.options.operator) {
-                        case 'more':
-                            return group[0].level > feedback.options.level 
-                        case 'less':
-                            return group[0].level < feedback.options.level
-                        case 'equal':
-                            return group[0].level == feedback.options.level
-                    }
-
+					// return true if state matches selected state
+					console.log(group[0].level > feedback.options.level, group[0].level, feedback.options.level)
+					switch (feedback.options.operator) {
+						case 'more':
+							return group[0].level > feedback.options.level
+						case 'less':
+							return group[0].level < feedback.options.level
+						case 'equal':
+							return group[0].level == feedback.options.level
+					}
 				}
-            }
-        },
+			},
+		},
 	}
-    return feedbacks
+	return feedbacks
 }
