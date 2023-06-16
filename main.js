@@ -12,7 +12,6 @@ class PharosInstance extends InstanceBase {
 	}
 
 	async init(config) {
-		console.log(process.env.NODE_ENV)
 		this.startup(config)
 	}
 

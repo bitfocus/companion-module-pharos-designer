@@ -78,7 +78,6 @@ export function getFeedbacks(self) {
 			callback: async (feedback) => {
 				// only run this if a timeline is selected to prevent errors
 				if (feedback.options.state && feedback.options.scene) {
-					self.log('debug', 'triggering feedback')
 					// get states of all scenes
 					const res = await self.controller.getScenes()
 					// filter out the selected scene
@@ -127,7 +126,6 @@ export function getFeedbacks(self) {
 			callback: async (feedback) => {
 				// only run this if everything is selected to prevent errors
 				if (feedback.options.level && feedback.options.operator && feedback.options.group) {
-					self.log('debug', 'triggering feedback')
 					// get states of all groups
 					const res = await self.controller.getGroups()
 					// filter out the selected group
