@@ -1,16 +1,16 @@
-export function getActions() {
+export function getActions(self) {
 	return {
 		controlTimeline: {
 			name: 'Control Timeline',
 			options: [
 				/* 	QUESTION: why is this not working?
-					https://bitfocus.github.io/companion-module-base/interfaces/CompanionInputFieldStaticText.html
+					https://bitfocus.github.io/companion-module-base/interfaces/CompanionInputFieldStaticText.html */
 				{
 					id: 'info-text-fade',
 					type: 'static-text',
 					label: 'Important',
 					value: 'The fade time set in Companion will always overwrite the default fade time',
-				},*/
+				},
 				{
 					id: 'action',
 					type: 'dropdown',
@@ -31,7 +31,7 @@ export function getActions() {
 					type: 'dropdown',
 					id: 'num',
 					label: 'Timeline',
-					choices: this.actionData.timelines,
+					choices: self.actionData.timelines,
 				},
 				{
 					id: 'rate',
@@ -63,7 +63,7 @@ export function getActions() {
 				const action = event.action
 				delete event.action
 				const options = event
-				this.controlTimeline(action, options)
+				self.controlTimeline(action, options)
 			},
 		},
 		controlGroups: {
@@ -79,7 +79,7 @@ export function getActions() {
 					type: 'dropdown',
 					id: 'num',
 					label: 'Groups',
-					choices: this.actionData.groups,
+					choices: self.actionData.groups,
 				},
 				{
 					id: 'level',
@@ -104,7 +104,7 @@ export function getActions() {
 				event = event.options
 				const options = event
 				console.log(options)
-				this.controlGroup('master_intensity', options)
+				self.controlGroup('master_intensity', options)
 			},
 		},
 		controlScenes: {
@@ -131,7 +131,7 @@ export function getActions() {
 					type: 'dropdown',
 					id: 'num',
 					label: 'Scenes',
-					choices: this.actionData.scenes,
+					choices: self.actionData.scenes,
 				},
 				{
 					id: 'fade',
@@ -145,7 +145,7 @@ export function getActions() {
 				const action = event.action
 				delete event.action
 				const options = event
-				this.controlScene(action, options)
+				self.controlScene(action, options)
 			},
 		},
 	}
