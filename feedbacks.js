@@ -104,8 +104,8 @@ export function getFeedbacks(self) {
 				},
 				{
 					type: 'dropdown',
-					label: 'Operator',
-					id: 'operator',
+					label: 'Operation',
+					id: 'operation',
 					choices: [
 						{ id: 'more', label: '>' },
 						{ id: 'less', label: '<' },
@@ -125,14 +125,14 @@ export function getFeedbacks(self) {
 			],
 			callback: async (feedback) => {
 				// only run this if everything is selected to prevent errors
-				if (feedback.options.level && feedback.options.operator && feedback.options.group) {
+				if (feedback.options.level && feedback.options.operation && feedback.options.group) {
 					// get states of all groups
 					const res = await self.controller.getGroups()
 					// filter out the selected group
 					const group = res.groups.filter((group) => group.num == feedback.options.group)
 					// return true if state matches selected state
 					console.log(group[0].level > feedback.options.level, group[0].level, feedback.options.level)
-					switch (feedback.options.operator) {
+					switch (feedback.options.operation) {
 						case 'more':
 							return group[0].level > feedback.options.level
 						case 'less':
