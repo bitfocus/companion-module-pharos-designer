@@ -40,15 +40,6 @@ class PharosInstance extends InstanceBase {
 
 	async initController() {
 		const self = this
-		if (this.controllerTimer) {
-			clearInterval(this.controllerTimer)
-			delete this.controllerTimer
-		}
-
-		if (this.socket !== undefined) {
-			this.socket.destroy()
-			delete this.socket
-		}
 
 		if (this.config.host) {
 			this.controller = new DesignerClient(this.config.host)
