@@ -3,8 +3,6 @@ export function getActions(self) {
 		controlTimeline: {
 			name: 'Control Timeline',
 			options: [
-				/* 	QUESTION: why is this not working?
-					https://bitfocus.github.io/companion-module-base/interfaces/CompanionInputFieldStaticText.html */
 				{
 					id: 'info-text-fade',
 					type: 'static-text',
@@ -32,12 +30,13 @@ export function getActions(self) {
 					id: 'num',
 					label: 'Timeline',
 					choices: self.actionData.timelines,
+					default: 0,
 				},
 				{
 					id: 'rate',
 					type: 'textinput',
 					label: 'Rate (0.1 to 1 is default timeline rate)',
-					isVisible: (options) => options.action == 'set_rate',
+					isVisibleExpression: '$(options:action) === "set_rate"',
 					min: 0,
 					max: 1,
 					default: 1,
@@ -47,7 +46,7 @@ export function getActions(self) {
 					id: 'position',
 					type: 'textinput',
 					label: 'Position (Fraction of timeline e.g. 0.5 or 10:100)',
-					isVisible: (options) => options.action == 'set_position',
+					isVisibleExpression: '$(options:action) === "set_position"',
 					required: true,
 				},
 				{
@@ -69,17 +68,18 @@ export function getActions(self) {
 		controlGroups: {
 			name: 'Control Groups',
 			options: [
-				/*{
+				{
 					id: 'info-text-fade',
 					type: 'static-text',
 					label: 'Important',
-					value: 'The fade time set in Companion will always overwrite the default fade time!',
-				},*/
+					value: 'The fade time set in Companion will always overwrite the default fade time',
+				},
 				{
 					type: 'dropdown',
 					id: 'num',
 					label: 'Groups',
 					choices: self.actionData.groups,
+					default: 0,
 				},
 				{
 					id: 'level',
@@ -94,6 +94,7 @@ export function getActions(self) {
 					type: 'number',
 					label: 'Fade (seconds)',
 					min: 0,
+					required: false,
 				},
 			],
 			callback: (event) => {
@@ -110,12 +111,12 @@ export function getActions(self) {
 		controlScenes: {
 			name: 'Control Scenes',
 			options: [
-				/*{
+				{
 					id: 'info-text-fade',
 					type: 'static-text',
 					label: 'Important',
-					value: 'The fade time set in Companion will always overwrite the default fade time!',
-				},*/
+					value: 'The fade time set in Companion will always overwrite the default fade time',
+				},
 				{
 					id: 'action',
 					type: 'dropdown',
@@ -132,6 +133,7 @@ export function getActions(self) {
 					id: 'num',
 					label: 'Scenes',
 					choices: self.actionData.scenes,
+					default: 0,
 				},
 				{
 					id: 'fade',
@@ -146,6 +148,40 @@ export function getActions(self) {
 				delete event.action
 				const options = event
 				self.controlScene(action, options)
+			},
+		},
+		controlTriggers: {
+			name: 'Control Triggers',
+			options: [
+				{
+					type: 'dropdown',
+					id: 'num',
+					label: 'Trigger',
+					choices: self.actionData.triggers,
+					default: 0,
+				},
+				{
+					id: 'var',
+					type: 'textinput',
+					label: 'String to pass to trigger',
+					default: '',
+				},
+				{
+					id: 'conditions',
+					type: 'checkbox',
+					label: 'Test conditions before firing',
+					default: true,
+				},
+			],
+			callback: (event) => {
+				// currently only fire is supported
+				// therefore the string is hard coded in here
+				// in future API versions this might change and
+				// a new input field needs to be added
+				event = event.options
+				const options = event
+				console.log(options)
+				self.controlTrigger('fire', options)
 			},
 		},
 	}
