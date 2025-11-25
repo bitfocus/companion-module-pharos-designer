@@ -26,11 +26,13 @@ class PharosInstance extends InstanceBase {
 	}
 
 	startup(config) {
+		this.log('debug', 'startup')
 		this.config = config
 		this.actionData = {
-			groups: [],
-			scenes: [],
-			timelines: [],
+			groups: [{id: 0, label: 'No groups found'}],
+			scenes: [{id: 0, label: 'No scenes found'}],
+			timelines: [{id: 0, label: 'No timelines found'}],
+			triggers: [{id: 0, label: 'No triggers found'}],
 		}
 		this.pharosConnected = false
 		this.updateActions() // export actions
@@ -63,7 +65,13 @@ class PharosInstance extends InstanceBase {
 				this.groupsResponse = await this.controller.getGroups()
 				this.scenesResponse = await this.controller.getScenes()
 				this.timelinesResponse = await this.controller.getTimelines()
-				if (this.groupsResponse.success && this.scenesResponse.success && this.timelinesResponse.success) {
+				this.triggersResponse = await this.controller.getTriggers()
+				if (
+					this.groupsResponse.success &&
+					this.scenesResponse.success &&
+					this.timelinesResponse.success &&
+					this.triggersResponse.success
+				) {
 					this.log('debug', 'Storing variables...')
 					// filter groups first because some dont have an id
 					this.filteredGroups = this.groupsResponse.groups.filter(function (group) {
@@ -80,6 +88,9 @@ class PharosInstance extends InstanceBase {
 					})
 					this.actionData.timelines = this.timelinesResponse.timelines?.map(function (timeline) {
 						return { id: timeline.num, label: timeline.name }
+					})
+					this.actionData.triggers = this.triggersResponse.triggers?.map(function (trigger) {
+						return { id: trigger.num, label: trigger.name }
 					})
 					// update actions and feedbacks after data has been recieved
 					this.updateActions() // update actions to have the actionData
@@ -161,6 +172,11 @@ class PharosInstance extends InstanceBase {
 		const res = await this.controller.controlScene(action, options)
 		this.checkFeedbacks('sceneState')
 		this.log('debug', `controlScene success: ${res.success}`)
+	}
+
+	async controlTrigger(action, options) {
+		const res = await this.controller.controlTrigger(action, options)
+		this.log('debug', `controlTrigger success: ${res.success}`)
 	}
 }
 

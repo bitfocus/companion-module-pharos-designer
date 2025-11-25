@@ -3,14 +3,14 @@
 	"name": "pharos-designer",
 	"shortname": "designer",
 	"description": "Module implements the HTTP API for Pharos Designer Controllers",
-	"version": "1.0.1",
+	"version": "1.2.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-pharos-designer.git",
 	"bugs": "https://github.com/bitfocus/companion-module-pharos-designer/issues",
 	"maintainers": [
 		{
 			"name": "Jonas Hartmann",
-			"email": "git.jonashartmann@proton.me"
+			"email": "jonas@spectraldream.com"
 		}
 	],
 	"legacyIds": [],
@@ -22,5 +22,5 @@
 	},
 	"manufacturer": "Pharos",
 	"products": ["Designer Controller"],
-	"keywords": ["Pharos", "Designer"]
+	"keywords": ["Pharos", "Designer", "Pharoscontrols"]
 }
