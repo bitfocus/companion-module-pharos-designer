@@ -18,7 +18,7 @@
 		"typescript": "^5.0.4"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.3.0"
+		"@companion-module/tools": "^2.6.1"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json"
 }
