@@ -15,12 +15,18 @@
 	],
 	"legacyIds": [],
 	"runtime": {
-		"type": "node18",
+		"type": "node26",
 		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
 		"entrypoint": "../main.js"
 	},
 	"manufacturer": "Pharos",
-	"products": ["Designer Controller"],
-	"keywords": ["Pharos", "Designer", "Pharoscontrols"]
+	"products": [
+		"Designer Controller"
+	],
+	"keywords": [
+		"Pharos",
+		"Designer",
+		"Pharoscontrols"
+	]
 }
